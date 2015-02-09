@@ -46,7 +46,7 @@ class VkControllerExtension  extends DataExtension {
     /**
      * @var
      */
-    private static $session;
+    private $session;
 
 
     /**
@@ -86,7 +86,7 @@ class VkControllerExtension  extends DataExtension {
     /**
      * @return stdClass
      */
-    public static function getVkSession() {
+    public function getVkSession() {
         if(!self::$session) {
             $accessToken = Session::get(
                 VkControllerExtension::VK_ACCESS_TOKEN
@@ -181,8 +181,6 @@ class VkControllerExtension  extends DataExtension {
      * @throws Exception
      */
     public function getUserInfo() {
-        //?={user_id}&fields=uid,first_name,last_name,nickname,screen_name,sex,bdate,city,country,timezone,photo
-        //&access_token={access_token}
         $session = $this->getVkSession();
         $params = array(
             'uids' => $session->user_id,

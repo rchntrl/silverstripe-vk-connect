@@ -33,12 +33,13 @@ class VkMemberExtension extends DataExtension {
         $member = $this->owner;
         $member->VkUID = $result->uid;
         if($override) {
+            /** @var stdClass $session */
             $session = Session::get(VkControllerExtension::VK_ACCESS_TOKEN);
             $email = $session->email;
-            $member->Nickname = $member->Nickname ?: ($result->nickname ?: $result->screen_name);
             if($email && !$this->owner->Email || !Email::validEmailAddress($this->owner->Email)) {
                 $member->Email = $email;
             }
+            $member->Nickname = $member->Nickname ?: ($result->nickname ?: $result->screen_name);
             $member->FirstName = $member->FirstName ?: $result->first_name;
             $member->Surname = $member->Surname ?: $result->last_name;
             $member->VkTimezone = $member->VkTimezone ?: $result->timezone;

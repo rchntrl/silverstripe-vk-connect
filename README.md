@@ -19,8 +19,8 @@ the existing SilverStripe member system.
 composer require "rchntrl/silverstripe-vkconnect" "dev-master"
 ```
 
-[Register your website / application](http://vk.com/editapp?act=create)
-with vk.com.
+[Register your website / application](https://vk.com/editapp?act=create) 
+ with vk.com
 
 Set your configuration through the SilverStripe Config API. For example I keep
 my configuration in `mysite/_config/vkconnect.yml` file:
