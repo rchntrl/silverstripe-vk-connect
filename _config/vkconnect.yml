@@ -1,0 +1,14 @@
+---
+name: vkconnect
+---
+Member:
+  extensions:
+    - VkMemberExtension
+
+Controller:
+  extensions:
+    - VkControllerExtension
+
+Authenticator::
+  authenticators:
+    - VkAuthenticator
