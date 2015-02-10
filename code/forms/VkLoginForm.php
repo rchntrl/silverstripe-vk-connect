@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Class VkLoginForm
- * 
+ * @package vkconnect
+ * TODO complete VkloginForm
  */
 class VkLoginForm extends MemberLoginForm {
 
@@ -10,22 +10,10 @@ class VkLoginForm extends MemberLoginForm {
 
     public function __construct($controller, $name, $fields = null, $actions = null, $checkCurrentUser = true) {
         if($checkCurrentUser && Member::currentUser() && Member::logged_in_session_exists()) {
-            $fields = new FieldList(
-                new HiddenField("AuthenticationMethod", null, $this->authenticator_class, $this)
-            );
 
-            $actions = new FieldList(
-                new FormAction("logout", _t('Member.BUTTONLOGINOTHER', "Log in as someone else"))
-            );
         }
         else {
-            $fields = new FieldList(
-                new LiteralField('VkLoginIn', "<fb:login-button scope='". $controller->getVkPermissions() ."'></fb:login-button>")
-            );
 
-            $actions = new FieldList(
-                new LiteralField('VkLoginLink', "<!-- <a href='".$controller->getVkLoginLink() ."'>". _t('VkLoginForm.LOGIN', 'Login') ."</a> -->")
-            );
         }
 
         $backURL = (isset($_REQUEST['BackURL'])) ? $_REQUEST['BackURL'] : Session::get('BackURL');

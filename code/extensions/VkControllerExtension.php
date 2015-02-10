@@ -87,16 +87,16 @@ class VkControllerExtension  extends DataExtension {
      * @return stdClass
      */
     public function getVkSession() {
-        if(!self::$session) {
+        if(!$this->session) {
             $accessToken = Session::get(
                 VkControllerExtension::VK_ACCESS_TOKEN
             );
 
             if($accessToken) {
-                self::$session = $accessToken;
+                $this->session = $accessToken;
             }
         }
-        return self::$session;
+        return $this->session;
     }
 
     /**

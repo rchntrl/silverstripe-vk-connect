@@ -1,8 +1,6 @@
 <?php
 
 /**
- * Class VkAuthenticator
- *
  *  @package vkconnect
  */
 class VkAuthenticator  extends Authenticator {
