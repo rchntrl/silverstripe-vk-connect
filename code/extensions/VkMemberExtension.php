@@ -39,7 +39,6 @@ class VkMemberExtension extends DataExtension {
             if($email && !$this->owner->Email || !Email::validEmailAddress($this->owner->Email)) {
                 $member->Email = $email;
             }
-            $member->Nickname = $member->Nickname ?: ($result->nickname ?: $result->screen_name);
             $member->FirstName = $member->FirstName ?: $result->first_name;
             $member->Surname = $member->Surname ?: $result->last_name;
             $member->VkTimezone = $member->VkTimezone ?: $result->timezone;
