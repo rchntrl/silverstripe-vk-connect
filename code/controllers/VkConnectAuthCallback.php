@@ -42,7 +42,7 @@ class VkConnectAuthCallback extends Controller {
                 $member->syncVkDetails($this->getUserInfo());
             }
         }
-        $member->logIn();
+        $member->logIn(true);
 
         // redirect the user to the provided url, otherwise take them
         // back to the route of the website.
