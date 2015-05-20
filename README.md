@@ -1,5 +1,5 @@
 # silverstripe-vk-connect
-Integration of Vkontakte Connect into SilverStripe
+Integration of Vk Connect into SilverStripe. (Inspired from * [`Facebook Connect Integration Module`](https://github.com/rchntrl/silverstripe-facebookconnect))
 
 ## Maintainer Contact 
  * Nurgazy Sarbalaev 
