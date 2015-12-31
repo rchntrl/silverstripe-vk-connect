@@ -3,7 +3,8 @@
 /**
  * @package vkconnect
  */
-class VkMemberExtension extends DataExtension {
+class VkMemberExtension extends DataExtension
+{
     
     /**
      * @var array
@@ -16,7 +17,8 @@ class VkMemberExtension extends DataExtension {
         'VkAccessToken' => 'Varchar'
     );
 
-    public function updateCMSFields(FieldList $fields) {
+    public function updateCMSFields(FieldList $fields)
+    {
         $fields->makeFieldReadonly('VkUID');
         $fields->makeFieldReadonly('VkLink');
         $fields->makeFieldReadonly('VkTimezone');
@@ -28,15 +30,16 @@ class VkMemberExtension extends DataExtension {
      * @param mixed $result
      * @param bool $sync Flag to whether we override fields like first name
      */
-    public function updateVkFields($result, $override = true) {
+    public function updateVkFields($result, $override = true)
+    {
         /** @var Member $member */
         $member = $this->owner;
         $member->VkUID = $result->uid;
-        if($override) {
+        if ($override) {
             /** @var stdClass $session */
             $session = Session::get(VkControllerExtension::VK_ACCESS_TOKEN);
             $email = $session->email;
-            if($email && !$this->owner->Email || !Email::validEmailAddress($this->owner->Email)) {
+            if ($email && !$this->owner->Email || !Email::validEmailAddress($this->owner->Email)) {
                 $member->Email = $email;
             }
             $member->FirstName = $member->FirstName ?: $result->first_name;
@@ -50,22 +53,23 @@ class VkMemberExtension extends DataExtension {
     /**
      * @param stdClass $info
      */
-    public function syncVkDetails($info) {
+    public function syncVkDetails($info)
+    {
         $sync = Config::inst()->get('VkControllerExtension', 'sync_member_details');
         $create = Config::inst()->get('VkControllerExtension', 'create_member');
 
         $this->owner->updateVkFields($info, $sync);
 
         // sync details	to the database
-        if(($this->owner->ID && $sync) || $create) {
-            if($this->owner->isChanged()) {
+        if (($this->owner->ID && $sync) || $create) {
+            if ($this->owner->isChanged()) {
                 $this->owner->write();
             }
         }
 
         // ensure members are in the correct groups
-        if($groups = Config::inst()->get('VkControllerExtension', 'member_groups')) {
-            foreach($groups as $group) {
+        if ($groups = Config::inst()->get('VkControllerExtension', 'member_groups')) {
+            foreach ($groups as $group) {
                 $this->owner->addToGroupByCode($group);
             }
         }

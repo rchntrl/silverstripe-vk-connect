@@ -3,7 +3,8 @@
 /**
  * @package vkconnect
  */
-class VkControllerExtension  extends DataExtension {
+class VkControllerExtension  extends DataExtension
+{
     /**
      * @config
      * @var bool $create_member
@@ -62,7 +63,8 @@ class VkControllerExtension  extends DataExtension {
     /**
      *
      */
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
 
         $appId = Config::inst()->get(
@@ -74,11 +76,11 @@ class VkControllerExtension  extends DataExtension {
         );
 
 
-        if(!$appId || !$secret) {
+        if (!$appId || !$secret) {
             return null;
         }
 
-        if(session_status() !== PHP_SESSION_ACTIVE) {
+        if (session_status() !== PHP_SESSION_ACTIVE) {
             Session::start();
         }
     }
@@ -86,13 +88,14 @@ class VkControllerExtension  extends DataExtension {
     /**
      * @return stdClass
      */
-    public function getVkSession() {
-        if(!$this->session) {
+    public function getVkSession()
+    {
+        if (!$this->session) {
             $accessToken = Session::get(
                 VkControllerExtension::VK_ACCESS_TOKEN
             );
 
-            if($accessToken) {
+            if ($accessToken) {
                 $this->session = $accessToken;
             }
         }
@@ -102,13 +105,14 @@ class VkControllerExtension  extends DataExtension {
     /**
      * @return string
      */
-    public function getVkLoginLink() {
+    public function getVkLoginLink()
+    {
         // save the url that this page is on to session. The user will be 
         // redirected back here.
         Session::set(self::SESSION_REDIRECT_URL_FLAG, $this->getCurrentPageUrl());
         $scope = Config::inst()->get('VkControllerExtension', 'permissions');
 
-        if(!$scope) {
+        if (!$scope) {
             $scope = array();
         }
         $secret = Config::inst()->get('VkControllerExtension', 'api_secret');
@@ -128,14 +132,16 @@ class VkControllerExtension  extends DataExtension {
     /**
      * @return string
      */
-    public function getVkAppId() {
+    public function getVkAppId()
+    {
         return Config::inst()->get('VkControllerExtension', 'app_id');
     }
 
     /**
      * @return string
      */
-    public function getCurrentPageUrl() {
+    public function getCurrentPageUrl()
+    {
         $url = Director::protocol() . "$_SERVER[HTTP_HOST]";
         $pos = strpos($_SERVER['REQUEST_URI'], '?');
 
@@ -148,13 +154,13 @@ class VkControllerExtension  extends DataExtension {
 
         // if the current page is the login page and the page contains a back
         // URL then we want to redirect the user to that instead.
-        if(isset($get['BackURL'])) {
+        if (isset($get['BackURL'])) {
             $last = strlen($get['BackURL']);
             $end = ($pos = strpos($get['BackURL'], '?')) ? $pos : $last;
             $url .= substr($get['BackURL'], 0, $end);
 
             unset($get['BackURL']);
-        } else if($pos !== false) {
+        } elseif ($pos !== false) {
             $url .= substr($_SERVER['REQUEST_URI'], 0, $pos);
         } else {
             $url .= $_SERVER['REQUEST_URI'];
@@ -169,7 +175,8 @@ class VkControllerExtension  extends DataExtension {
     /**
      * @return string
      */
-    public function getVkCallbackLink() {
+    public function getVkCallbackLink()
+    {
         return Controller::join_links(
             Director::absoluteBaseUrl(),
             'VkConnectAuthCallback/connect'
@@ -180,7 +187,8 @@ class VkControllerExtension  extends DataExtension {
      * @return mixed|string
      * @throws Exception
      */
-    public function getUserInfo() {
+    public function getUserInfo()
+    {
         $session = $this->getVkSession();
         $params = array(
             'uids' => $session->user_id,
@@ -192,7 +200,8 @@ class VkControllerExtension  extends DataExtension {
         return $response->response[0];
     }
 
-    public function getAccessToken($code) {
+    public function getAccessToken($code)
+    {
         $appId = Config::inst()->get('VkControllerExtension', 'app_id');
         $secret = Config::inst()->get('VkControllerExtension', 'api_secret');
         $params = array(
@@ -217,7 +226,8 @@ class VkControllerExtension  extends DataExtension {
      * @return mixed|string
      * @throws Exception
      */
-    private function call($url, array $params) {
+    private function call($url, array $params)
+    {
         $response = array();
         $urlToken = $url . '?' . urldecode(http_build_query($params));
         $ctx = stream_context_create(
