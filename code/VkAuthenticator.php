@@ -3,7 +3,8 @@
 /**
  *  @package vkconnect
  */
-class VkAuthenticator  extends Authenticator {
+class VkAuthenticator  extends Authenticator
+{
 
     /**
      * Authentication is handled by Facebook rather than us this needs to
@@ -12,7 +13,8 @@ class VkAuthenticator  extends Authenticator {
      *
      * @return false|Member
      */
-    public static function authenticate($RAW_data, Form $form = null) {
+    public static function authenticate($RAW_data, Form $form = null)
+    {
         return ($member = Member::currentUser()) ? $member : false;
     }
 
@@ -21,7 +23,8 @@ class VkAuthenticator  extends Authenticator {
      *
      * @return Form
      */
-    public static function get_login_form(Controller $controller) {
+    public static function get_login_form(Controller $controller)
+    {
         return Object::create("VkLoginForm", $controller, "VkLoginForm");
     }
 
@@ -30,7 +33,8 @@ class VkAuthenticator  extends Authenticator {
      *
      * @return string
      */
-    public static function get_name() {
+    public static function get_name()
+    {
         return _t('VkAuthenticator.TITLE', "Vk Connect");
     }
 }
